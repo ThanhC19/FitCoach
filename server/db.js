@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes } from "sequelize";
-import userModel from "./models/user.js";
+import { Sequelize} from "sequelize";
+import initialModels from "./models/index.js";
 
 
 // creating sequelize instance:
@@ -22,15 +22,15 @@ export const sequelize = new Sequelize(
   }
 );
 
-// initialize models:
-export const User = userModel(sequelize, DataTypes);
+
+export const { User, Goal, Calendar } = initialModels(sequelize);
 
 //export connect DB function:
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully");
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({force: true}); //Had to recreate it again since all the tables were already there
     console.log("models synchronized");
 
   } catch (err) {
