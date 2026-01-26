@@ -16,13 +16,18 @@ export const sequelize = new Sequelize(
     acquire: 30000,
     idle: 10000
   },
-  operatorsAliases: false
 }
 );
+
+// const mod = await import("./models/user.js"); 
+// const defineModel = mod.default;   
+// const model = defineModel(sequelize, Sequelize.DataTypes);
+// db[model.name] = model;
 
 export const connectDB = async () => {
     try {
         await sequelize.authenticate();
+        await import ("./models/index.js")
         await sequelize.sync({alter:true});
         console.log("Connection has been established successfully")
     } catch (err) {
