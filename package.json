@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/ThanhC19/FitCoach/issues"
   },
-  "homepage": "https://github.com/ThanhC19/FitCoach#readme"
+  "homepage": "https://github.com/ThanhC19/FitCoach#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
+    "globals": "^17.1.0"
+  }
 }
