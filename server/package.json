@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "test:app": "vitest run tests/app.test.js"
+
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +20,8 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "eslint": "^9.39.2"
+    "eslint": "^9.39.2",
+    "supertest": "^7.2.2",
+    "vitest": "^4.0.18"
   }
 }
