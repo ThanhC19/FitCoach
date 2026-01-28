@@ -1,4 +1,4 @@
-import { Sequelize} from "sequelize";
+import { Sequelize } from "sequelize";
 import initialModels from "./models/index.js";
 
 
