@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme, CssBaseline, IconButton } from '@mui/materi
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import Login from './components/login/login';
 import Register from './components/register/register';
+import Calendar from "./components/calendar/calendar";
 
 function App() {
   const [view, setView] = useState('login');
@@ -57,14 +58,6 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
-        {/* FIXED THEME TOGGLE: This stays in the top left of the window */}
-        <div className="fixed top-6 left-6 z-50">
-          <IconButton onClick={toggleTheme} color="inherit" sx={{ border: '1px solid', borderColor: 'divider' }}>
-            {mode === 'dark' ? <Brightness7 className="text-yellow-400" /> : <Brightness4 />}
-          </IconButton>
-        </div>
-
         <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-500">
 
           <div className="text-center">
@@ -73,6 +66,7 @@ function App() {
                 2. Wrap this in a proper Router  once routes are done.
                 3. Add a  Sidebar/Navbar Here.
             */}
+            <Calendar />
             <p className="text-slate-400 font-mono italic mb-4">
               Welcome To Fit
             </p>

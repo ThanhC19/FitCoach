@@ -4,7 +4,7 @@ import goalModel from "./goals.js";
 import calendarModel from "./calendar.js";
 
 const initialModels = (sequelize) => {
- 
+
   const User = userModel(sequelize, DataTypes);
   const Goal = goalModel(sequelize, DataTypes);
   const Calendar = calendarModel(sequelize, DataTypes);
@@ -16,8 +16,8 @@ const initialModels = (sequelize) => {
   Goal.hasOne(Calendar, { foreignKey: "GoalID", onDelete: "CASCADE" });
   Calendar.belongsTo(Goal, { foreignKey: "GoalID" });
 
-  
-  return { User, Goal, Calendar};
+
+  return { User, Goal, Calendar };
 };
 
-export  default initialModels;
+export default initialModels;
