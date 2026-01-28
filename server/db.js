@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import initialModels from "./models/index.js";
+import startingModels from "./models/index.js";
 
 
 // creating sequelize instance:
@@ -18,19 +18,24 @@ export const sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000
     },
-    operatorsAliases: false
+    operatorsAliases: false,
   }
 );
 
 
-export const { User, Goal, Calendar } = initialModels(sequelize);
+// initialize models
+const models = startingModels(sequelize);
+
+export const User = models.User;
+export const Goal = models.Goal;
+export const Calendar = models.Calendar;
 
 //export connect DB function:
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully");
-    await sequelize.sync({force: true}); //Had to recreate it again since all the tables were already there
+    await sequelize.sync({ force: true }); //Had to recreate it again since all the tables were already there
     console.log("models synchronized");
 
   } catch (err) {

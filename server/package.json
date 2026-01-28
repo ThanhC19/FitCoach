@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "test:app": "vitest run tests/app.test.js"
+    "test:app": "vitest run tests/app.test.js",
+    "test:db": "vitest run tests/db.test.js"
 
   },
   "author": "",
