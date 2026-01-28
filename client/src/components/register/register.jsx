@@ -1,11 +1,13 @@
 import  { useState } from 'react'; 
 import { Button, TextField, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from 'react-router';
 
 
-const Register = ({ onSwitch }) => {
+const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   
@@ -103,7 +105,7 @@ const Register = ({ onSwitch }) => {
           <Button
             fullWidth
             variant="outlined"
-            onClick={onSwitch}
+            onClick={() => navigate('/login')}
             className="py-3 font-bold border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
             sx={{
               mt: 1,
