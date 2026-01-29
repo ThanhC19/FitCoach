@@ -3,7 +3,7 @@ import userModel from "./user.js";
 import goalModel from "./goals.js";
 import calendarModel from "./calendar.js";
 
-const initialModels = (sequelize) => {
+const startingModels = (sequelize) => {
 
   const User = userModel(sequelize, DataTypes);
   const Goal = goalModel(sequelize, DataTypes);
@@ -20,4 +20,4 @@ const initialModels = (sequelize) => {
   return { User, Goal, Calendar };
 };
 
-export default initialModels;
+export default startingModels;

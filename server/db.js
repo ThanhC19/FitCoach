@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import initialModels from "./models/index.js";
+import startingModels from "./models/index.js";
 
 // creating sequelize instance:
 export const sequelize = new Sequelize(
@@ -18,10 +18,16 @@ export const sequelize = new Sequelize(
       idle: 10000,
     },
     operatorsAliases: false,
-  },
+  }
 );
 
-export const { User, Goal, Calendar } = initialModels(sequelize);
+
+// initialize models
+const models = startingModels(sequelize);
+
+export const User = models.User;
+export const Goal = models.Goal;
+export const Calendar = models.Calendar;
 
 //export connect DB function:
 export const connectDB = async () => {
