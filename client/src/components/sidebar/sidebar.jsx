@@ -1,9 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-export default function Sidebar() {
+export default function Sidebar({ onLogout }) {
   const location = useLocation(); // uselocation() gives an object describing the current url in the app
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -47,6 +48,21 @@ export default function Sidebar() {
         }}
       >
         Goal Setting
+      </Button>
+
+      <Button
+        onClick={() => {
+          onLogout(); //call the logout function, dunno if this will change after we implement auth
+          navigate("/login");
+        }}
+        sx={{
+          mt: "auto",
+          justifyContent: "flex-start",
+          fontSize: "1.1rem",
+          color: "#d32f2f",
+        }}
+      >
+        Logout
       </Button>
     </Box>
   );
