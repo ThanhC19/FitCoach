@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { ThemeProvider, CssBaseline, IconButton } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { getCustomTheme } from './theme';
+import { Routes, Route, Navigate, Outlet } from "react-router"; 
 
 // Components
 import Login from './components/login/login';
@@ -9,11 +10,9 @@ import Register from './components/register/register';
 import Calendar from "./components/calendar/calendar";
 
 function App() {
-  const [view, setView] = useState('login');
   const [mode, setMode] = useState('light');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Memoize theme to prevent unnecessary re-renders
   const theme = useMemo(() => getCustomTheme(mode), [mode]);
 
   const toggleTheme = () => {
@@ -25,58 +24,63 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       
-      {/* Global Theme Toggle */}
+      {/* Global Theme Changer */}
       <div className="fixed top-6 left-6 z-50">
         <IconButton onClick={toggleTheme} color="inherit" sx={{ border: '1px solid', borderColor: 'divider' }}>
           {mode === 'dark' ? <Brightness7 className="text-yellow-400" /> : <Brightness4 />}
         </IconButton>
       </div>
-       
-       {/* Authenticated and unathenticated logic */}
-      <main className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-500">
-        {isAuthenticated ? (
-          <Dashboard onLogout={() => setIsAuthenticated(false)} />
-        ) : (
-          <AuthGateway 
-            view={view} 
-            setView={setView} 
-            onLogin={() => setIsAuthenticated(true)} 
-          />
-        )}
-      </main>
+
+      <Routes>
+
+        <Route element={<AuthLayout />}>
+        {/* Public Routes */}
+        <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
+        <Route path="/register" element={<Register />} />
+        </Route>
+
+        {/* Authenticated Layout Route on Logout Event handler was added to handle logout request on the navbar*/}
+        <Route 
+          element={isAuthenticated ? (<DashboardLayout onLogout={() => setIsAuthenticated(false)}/>) : <Navigate to="/login" replace />} // 
+        >
+          {/*All the protecred routes goes here such as goals component etc*/}
+          <Route path="/home" element={<Calendar/>} />
+        </Route>
+
+        {/* Fallback Redirects */}
+        <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} replace />} />
+        <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/login"} replace />} />
+
+      </Routes>
     </ThemeProvider>
   );
 }
 
-/*
- Sub-component for Authenticated Area
-This keeps the main App code clean.
- */
-function Dashboard() {
+// {onLogout} between the () add this to line 60 when navbar is imported
+// Helper function for the Dashboard Layout 
+function DashboardLayout() {
   return (
-    <div className="w-full min-h-screen flex flex-col">
-      {/* 1. Add the Navbar here */}
-
-      {/* 2. Content Area */}
-      <div className="flex-grow flex flex-col items-center justify-center pt-24 pb-12 px-4">
+    <div className="w-full min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-500">
+       {/* Navbar in line 63 where we import the navbar  like this since <Navbar onLogout={onLogout} />*/}  
+      
+      <main className="flex-grow flex flex-col items-center justify-center pt-24 pb-12 px-4">
         <div className="w-full max-w-4xl">
-          <Calendar />
-          <div className="mt-8 text-center">
-            <p className="text-slate-400 font-mono italic">Welcome To FitCoach</p>
-          </div>
+          {/* This is where Calendar will be rendered  and other pages*/}
+          <Outlet /> 
         </div>
-      </div>
+      </main>
     </div>
   );
 }
-
-
-//Sub-component for Login/Register toggle
-function AuthGateway({ view, setView, onLogin }) {
-  return view === 'login' ? (
-    <Login onSwitch={() => setView('register')} onLogin={onLogin} />
-  ) : (
-    <Register onSwitch={() => setView('login')} />
+ 
+// Helper function for the AUTH Layout for register and login otherwise it will be on top left corner
+function AuthLayout() {
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 transition-colors duration-500">
+      <div className="w-full flex justify-center items-center">
+        <Outlet />
+      </div>
+    </div>
   );
 }
 
