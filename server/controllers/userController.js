@@ -68,8 +68,8 @@ export const login = async (req, res) => {
     if (!validatedPass)
       return res.status(401).json({ message: "Invalid credentials" });
 
-    // TODO Session isn't initialized yet, so this will throw an error.
-    //req.session.uid = user.UID;
+    // save the uid in a session
+    req.session.uid = user.UID;
     res.status(200).send(user.username);
   } catch (error) {
     console.error(error);
