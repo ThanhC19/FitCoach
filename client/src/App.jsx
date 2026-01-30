@@ -9,6 +9,7 @@ import Login from "./components/login/login";
 import Register from "./components/register/register";
 import Calendar from "./components/calendar/calendar";
 import Sidebar from "./components/sidebar/sidebar";
+import Goals from "./components/goals/goals";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -62,6 +63,7 @@ function App() {
         >
           {/*All protected routes goes here*/}
           <Route path="/home" element={<Calendar />} />
+          <Route path="/goal-setting" element={<Goals />} />
         </Route>
 
         {/* Fallback Redirects */}
