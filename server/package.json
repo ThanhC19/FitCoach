@@ -7,8 +7,9 @@
     "test": "vitest",
     "test:app": "vitest run tests/app.test.js",
     "test:db": "vitest run tests/db.test.js",
-    "test:register": "vitest run tests/register.test.js"
-    "test:login": "vitest run tests/login.test.js"
+    "test:register": "vitest run tests/register.test.js",
+    "test:login": "vitest run tests/login.test.js",
+    "test:getgoals": "vitest run tests/getgoals.test.js"
   },
   "author": "",
   "license": "ISC",
