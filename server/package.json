@@ -6,7 +6,8 @@
   "scripts": {
     "test": "vitest",
     "test:app": "vitest run tests/app.test.js",
-    "test:db": "vitest run tests/db.test.js"
+    "test:db": "vitest run tests/db.test.js",
+    "test:register": "vitest run tests/register.test.js"
 
   },
   "author": "",
