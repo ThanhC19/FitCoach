@@ -8,7 +8,7 @@
     "test:app": "vitest run tests/app.test.js",
     "test:db": "vitest run tests/db.test.js",
     "test:register": "vitest run tests/register.test.js"
-
+    "test:login": "vitest run tests/login.test.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +18,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "pg": "^8.17.2",
     "sequelize": "^6.37.7"
   },
