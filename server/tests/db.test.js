@@ -3,7 +3,7 @@ import { test, expect, vi, beforeEach } from "vitest";
 import { connectDB, sequelize } from "../db.js";
 
 
-// reset beforee each test:
+// reset before each test:
 beforeEach(() => {
   vi.clearAllMocks();
 });
