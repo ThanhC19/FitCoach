@@ -13,7 +13,7 @@ app.use(session({
   cookie:{
     httpOnly:true, //prevents client side script
     secure:false,
-    maxAge:1000*60*60 //1hour 
+    maxAge:1000*60*60*24*30 //1month
   }
 }))
 
