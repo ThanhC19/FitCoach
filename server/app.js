@@ -4,7 +4,10 @@ const app = express();
 import router from "./router.js"
 import session from "express-session";
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  credentials: true // for the cookies
+}));
 app.use(express.json());
 app.use(session({
   secret:process.env.SESSION_SECRET || 'a_back_up_test_secret' ,
