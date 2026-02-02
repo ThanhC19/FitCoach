@@ -7,12 +7,13 @@ const API = axios.create({
   withCredentials: true, // Required for session cookies
 });
 
-export const register = async (username, password) => {
+export const register = async ({ username, password }) => {
   try {
     const response = await API.post("/register", { username, password });
     return response.data;
   } catch (error) {
-    throw error.response?.data?.message || "Server Error";
+    const msg = error.response?.data?.message || "Server Error";
+    throw new Error(msg);
   }
 };
 
