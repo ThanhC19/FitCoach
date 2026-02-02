@@ -87,3 +87,31 @@ export const login = async (req, res) => {
       .send({ error: "500", message: "Username or password is incorrect" });
   }
 };
+
+export const logout = async (req, res) => {
+  try {
+
+    //if no session exists, nothing to log out from
+    if (!req.session) {
+      return res.status(200).json({ message: "Already logged out" })
+    }
+
+    // destroy the session:
+    req.session.destroy(err => {
+      if (err) {
+        console.error("logout error: ", err);
+        return res.status(500).json({ message: "Failed to log out" });
+      }
+
+      //clear the cookie
+      res.clearCookie("connect.sid");
+
+      return res.status(200).json({ message: "Logged out successfully" })
+
+    });
+
+  } catch (err) {
+    console.error("logout error: ", err);
+    res.status(500).json({ message: "Failed to log out" });
+  }
+}
