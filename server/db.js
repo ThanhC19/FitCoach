@@ -33,6 +33,7 @@ export const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully");
+    await sequelize.sync({ force: true });
   } catch (err) {
     console.log("DB connection failed", err);
     throw err;
