@@ -1,4 +1,4 @@
-import { Calendar, Goal } from "../db.js";
+import { Activities, Goal } from "../db.js";
 import { Op } from "sequelize";
 
 export const getActivities = async (req, res) => {
@@ -19,7 +19,7 @@ export const getActivities = async (req, res) => {
     }
 
     // Now we find all activities matching that Foreign Key
-    const activities = await Calendar.findAll({
+    const activities = await Activities.findAll({
       where: { GoalID: GoalID }, // Searching by Foreign Key
       order: [["start", "ASC"]],
     });
@@ -53,7 +53,7 @@ export const postActivity = async (req, res) => {
     }
 
     // check that there's not already another activity booked in that timeslot. using Sequelize Operators
-    const overlapping = await Calendar.findOne({
+    const overlapping = await Activities.findOne({
       where: {
         GoalID,
         [Op.or]: [ // start OR end:
@@ -71,7 +71,7 @@ export const postActivity = async (req, res) => {
 
 
 
-    const newActivity = await Calendar.create({ GoalID, Title, start, end })
+    const newActivity = await Activities.create({ GoalID, Title, start, end })
     return res.status(201).json(newActivity);
 
   } catch (err) {

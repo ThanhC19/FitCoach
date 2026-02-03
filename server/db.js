@@ -26,7 +26,7 @@ const models = startingModels(sequelize);
 
 export const User = models.User;
 export const Goal = models.Goal;
-export const Calendar = models.Calendar;
+export const Activities = models.Activities;
 
 //export connect DB function:
 export const connectDB = async () => {

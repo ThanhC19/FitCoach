@@ -61,10 +61,11 @@ export const mockGoals = [
   },
 ];
 
-// ---- CALENDAR EVENTS -----------------------------------------------
+// ---- Activites  -----------------------------------------------
 // One Calendar entry per Goal (Goal.hasOne(Calendar))
+// TODO: Change it to activities later  
 
-export const mockCalendars = [
+export const mockCalendar = [
   {
     Calendar_ID: 1,
     GoalID: 1, // alice's weight loss goal
