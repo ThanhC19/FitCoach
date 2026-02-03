@@ -16,10 +16,9 @@ export const sequelize = new Sequelize(
       min: 0,
       acquire: 30000,
       idle: 10000,
-    }
-  }
+    },
+  },
 );
-
 
 // initialize models
 const models = startingModels(sequelize);
@@ -32,6 +31,7 @@ export const Activities = models.Activities;
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
+    // await sequelize.sync({ force: true });
     console.log("Connection has been established successfully");
   } catch (err) {
     console.log("DB connection failed", err);

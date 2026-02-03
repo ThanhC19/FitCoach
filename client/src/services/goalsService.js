@@ -7,7 +7,7 @@ const API = axios.create({
   withCredentials: true, // Required for session cookies
 });
 
-export const saveGoals = async ({ goal, availableDays, timeSlots }) => {
+export const saveGoal = async ({ goal, availableDays, timeSlots }) => {
   try {
     const response = await API.post("/goals", {
       goal,
@@ -20,7 +20,7 @@ export const saveGoals = async ({ goal, availableDays, timeSlots }) => {
   }
 };
 
-export const getGoals = async () => {
+export const getGoal = async () => {
   try {
     const response = await API.get("/goals");
     return response.data;
