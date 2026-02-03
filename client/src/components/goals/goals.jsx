@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,6 +15,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { saveGoals } from "../../services/goalsService";
 
 // Convert "HH:mm" to minutes
 const toMinutes = (hhmm) => {
@@ -36,6 +38,14 @@ export default function Goals() {
 
   // Validation message for the time slot
   const [timeError, setTimeError] = useState("");
+
+  // State for displaying error messages in the UI
+  const [error, setError] = useState("");
+
+  // to toggle the disabled status
+  const [isSaving, setIsSaving] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleGoalChange = (event) => {
     setGoal(event.target.value);
@@ -63,29 +73,51 @@ export default function Goals() {
   }, [startTime, endTime]);
 
   // Build the payload to send to the server
-  // const payload = useMemo(() => {
-  //   // a slot is valid only when both times exist AND start is strictly earlier than end
-  //   const hasValidSlot =
-  //     startTime &&
-  //     endTime &&
-  //     toMinutes(startTime.format("HH:mm")) < toMinutes(endTime.format("HH:mm"));
+  const payload = useMemo(() => {
+    // a slot is valid only when both times exist AND start is strictly earlier than end
+    const hasValidSlot =
+      startTime &&
+      endTime &&
+      toMinutes(startTime.format("HH:mm")) < toMinutes(endTime.format("HH:mm"));
 
-  //   return {
-  //     Goal: goal,
-  //     AvailableDays: days,
-  //     time_slots: hasValidSlot
-  //       ? [
-  //           {
-  //             start: startTime.format("HH:mm"),
-  //             end: endTime.format("HH:mm"),
-  //           },
-  //         ]
-  //       : [],
-  //   };
-  // }, [goal, days, startTime, endTime]);
+    return {
+      goal,
+      availableDays: days,
+      timeSlots: hasValidSlot
+        ? [
+            {
+              start: startTime.format("HH:mm"),
+              end: endTime.format("HH:mm"),
+            },
+          ]
+        : [],
+    };
+  }, [goal, days, startTime, endTime]);
 
-  // TODO Send payload to the server when our API get ready
-  // const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    // empty an error message
+    setError("");
+
+    //last check for each inputs
+    if (!goal) return setError("Please select a workout goal.");
+    if (!days.length)
+      return setError("Please select at least one allowed day.");
+    if (timeError) return setError(timeError);
+    if (!payload.timeSlots.length)
+      return setError("Please select a valid time slot.");
+
+    try {
+      // make input forms and the button disabled
+      setIsSaving(true);
+
+      await saveGoals(payload);
+      navigate("/home");
+    } catch (e) {
+      setError(String(e));
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <Box sx={{ minWidth: 150 }}>
@@ -96,6 +128,7 @@ export default function Goals() {
           <InputLabel id="workout-goal-label">Workout goal</InputLabel>
           <Select
             labelId="workout-goal-label"
+            disabled={isSaving}
             id="workout-goal"
             value={goal}
             label="goal"
@@ -116,6 +149,7 @@ export default function Goals() {
 
           <ToggleButtonGroup
             id="allowed-days"
+            disabled={isSaving}
             aria-labelledby="allowed-days-label"
             value={days}
             onChange={handleDaysChange}
@@ -141,6 +175,7 @@ export default function Goals() {
               <Stack direction="row" spacing={2} flexWrap="wrap">
                 <TimePicker
                   label="Start time"
+                  disabled={isSaving}
                   ampm={false}
                   format="HH:mm"
                   minutesStep={5}
@@ -149,6 +184,7 @@ export default function Goals() {
                 />
                 <TimePicker
                   label="End time"
+                  disabled={isSaving}
                   ampm={false}
                   format="HH:mm"
                   minutesStep={5}
@@ -159,18 +195,18 @@ export default function Goals() {
             </DemoContainer>
           </LocalizationProvider>
 
+          {/* Display an error for the time slot */}
           {timeError && (
             <Alert sx={{ mt: 2 }} severity="error">
               {timeError}
             </Alert>
           )}
         </Box>
-        {/* debug */}
-        {/* <pre>{JSON.stringify(payload, null, 2)}</pre> */}
 
         {/* Generate Schedule Button  */}
         <Button
-          onClick={() => {}}
+          onClick={handleSubmit}
+          disabled={isSaving}
           variant="contained"
           startIcon={<AutoAwesomeIcon sx={{ fontSize: 18 }} />}
           sx={{
@@ -189,8 +225,14 @@ export default function Goals() {
             },
           }}
         >
-          Get schedule from coach
+          {isSaving ? "Saving..." : "Get schedule from coach"}
         </Button>
+        {/* Display API error */}
+        {error && (
+          <Alert sx={{ mt: 2 }} severity="error">
+            {error}
+          </Alert>
+        )}
       </Stack>
     </Box>
   );
