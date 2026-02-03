@@ -12,7 +12,7 @@ export const getActivities = async (req, res) => {
     // Since GoalID is a Foreign Key in the Calendar table,
     // we first check if that Goal actually exists in the Goal table.
     const goal = await Goal.findByPk(GoalID);
-    
+
     if (!goal) {
       // If the Foreign Key refers to a non-existent Goal
       return res.status(404).json({ message: "Goal not found." });
@@ -26,15 +26,15 @@ export const getActivities = async (req, res) => {
 
     return res.status(200).json(activities);
   } catch (error) {
-    return res.status(500).json({ message: "Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
   }
 };
 
-
 export const postActivity = async (req, res) => {
   try {
-
-    const { GoalID, Title, start, end } = req.body;
+    const { GoalID, Title, Description, start, end } = req.body;
 
     //check that all fields are filled:
     if (!GoalID || !Title || !start || !end) {
@@ -49,37 +49,42 @@ export const postActivity = async (req, res) => {
 
     //check that the starttime is before endtime:
     if (new Date(start) >= new Date(end)) {
-      return res.status(400).json({ message: "Start time must be before end time." });
+      return res
+        .status(400)
+        .json({ message: "Start time must be before end time." });
     }
 
     // check that there's not already another activity booked in that timeslot. using Sequelize Operators
     const overlapping = await Activities.findOne({
       where: {
         GoalID,
-        [Op.or]: [ // start OR end:
+        [Op.or]: [
+          // start OR end:
           { start: { [Op.between]: [start, end] } }, // between start and end
           { end: { [Op.between]: [start, end] } }, // between start and end
-        ]
-      }
+        ],
+      },
     });
 
     if (overlapping) {
-      return res.status(409).json({ message: "This activity overlaps with an existing one." });
+      return res
+        .status(409)
+        .json({ message: "This activity overlaps with an existing one." });
     }
 
-
-
-
-
-    const newActivity = await Activities.create({ GoalID, Title, start, end })
+    const newActivity = await Activities.create({
+      GoalID,
+      Title,
+      Description,
+      start,
+      end,
+    });
     return res.status(201).json(newActivity);
-
   } catch (err) {
     console.error("postActivity error: ", err);
-    return res.status(500).json({ message: "Failed to post the event" })
+    return res.status(500).json({ message: "Failed to post the event" });
   }
-}
-
+};
 
 export const getTodaysActivities = async (req, res) => {
   try {
@@ -89,10 +94,10 @@ export const getTodaysActivities = async (req, res) => {
       return res.status(400).json({ message: "GoalID is required." });
     }
 
-     // Since GoalID is a Foreign Key in the Calendar table,
+    // Since GoalID is a Foreign Key in the Calendar table,
     // we first check if that Goal actually exists in the Goal table.
     const goal = await Goal.findByPk(GoalID);
-    
+
     if (!goal) {
       // If the Foreign Key refers to a non-existent Goal
       return res.status(404).json({ message: "Goal not found." });
@@ -119,6 +124,8 @@ export const getTodaysActivities = async (req, res) => {
     return res.status(200).json(activities);
   } catch (error) {
     console.error("getTodaysActivities error: ", error);
-    return res.status(500).json({ message: "Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
   }
 };
