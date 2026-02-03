@@ -21,13 +21,16 @@ export default function Sidebar({ onLogout }) {
     >
       <Button
         component={Link} // the link is like the 'a' keyword but instead of refreshing the entire page it changes the url without reloading. SPA.
-        to="/"
+        to="/home"
         sx={{
           justifyContent: "flex-start",
           fontSize: "1.1rem",
-          boxShadow: location.pathname === "/" ? "0 0 10px #90caf9" : "none", // uses the uselocation to determine if the button should be highlighted or not
+          boxShadow:
+            location.pathname === "/home" ? "0 0 10px #90caf9" : "none", // uses the uselocation to determine if the button should be highlighted or not
           backgroundColor:
-            location.pathname === "/" ? "rgba(144,202,249,0.2)" : "transparent",
+            location.pathname === "/home"
+              ? "rgba(144,202,249,0.2)"
+              : "transparent",
         }}
       >
         Home
