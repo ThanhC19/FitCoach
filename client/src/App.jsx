@@ -48,7 +48,10 @@ function App() {
             path="/login"
             element={<Login onLogin={() => setIsAuthenticated(true)} />}
           />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/register"
+            element={<Register setIsAuthenticated={setIsAuthenticated} />}
+          />
         </Route>
 
         {/* Authenticated Layout Route on Logout Event handler was added to handle logout request on the navbar*/}
