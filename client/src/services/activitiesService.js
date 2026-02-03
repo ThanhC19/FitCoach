@@ -7,11 +7,18 @@ const API = axios.create({
   withCredentials: true, // Required for session cookies
 });
 
-export const saveActivities = async ({ GoalID, Title, start, end }) => {
+export const saveActivities = async ({
+  GoalID,
+  Title,
+  Description,
+  start,
+  end,
+}) => {
   try {
     const response = await API.post("/activities", {
       GoalID,
       Title,
+      Description,
       start,
       end,
     });
