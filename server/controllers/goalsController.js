@@ -11,7 +11,10 @@ export const getAllGoals = async (req, res) => {
 
 export const getGoalByUserId = async (req, res) => {
   try {
-    const { uid } = req.params;
+    const uid = req.session?.uid;
+    // check if user is authorized
+    if (!uid) return res.status(401).json({ message: "Unauthorized" });
+
     const goal = await Goal.findOne({
       where: { UID: uid },
     });
