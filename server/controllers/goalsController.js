@@ -1,13 +1,13 @@
 import { Goal } from "../db.js";
 
-export const getAllGoals = async (req, res) => {
-  try {
-    const goals = await Goal.findAll();
-    res.status(200).json(goals);
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
-  }
-};
+// export const getAllGoals = async (req, res) => {
+//   try {
+//     const goals = await Goal.findAll();
+//     res.status(200).json(goals);
+//   } catch (error) {
+//     res.status(500).json({ message: "Server Error", error: error.message });
+//   }
+// };
 
 export const getGoalByUserId = async (req, res) => {
   try {

@@ -15,7 +15,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { saveGoals } from "../../services/goalsService";
+import { getGoal, saveGoal } from "../../services/goalsService";
+import { generateActivities } from "../../services/aiService";
+import { saveActivities } from "../../services/activitiesService";
 
 // Convert "HH:mm" to minutes
 const toMinutes = (hhmm) => {
@@ -110,7 +112,26 @@ export default function Goals() {
       // make input forms and the button disabled
       setIsSaving(true);
 
-      await saveGoals(payload);
+      await saveGoal(payload);
+
+      const goal = await getGoal();
+
+      const aiResult = await generateActivities(
+        goal.Goal,
+        goal.AvailableDays,
+        goal.time_slots,
+      );
+
+      for (const activity of aiResult) {
+        await saveActivities(
+          goal.GoalID,
+          activity.Title,
+          activity.Description,
+          activity.start,
+          activity.end,
+        );
+      }
+
       navigate("/home");
     } catch (e) {
       setError(String(e));
