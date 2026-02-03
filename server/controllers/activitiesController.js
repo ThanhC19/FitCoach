@@ -89,6 +89,15 @@ export const getTodaysActivities = async (req, res) => {
       return res.status(400).json({ message: "GoalID is required." });
     }
 
+     // Since GoalID is a Foreign Key in the Calendar table,
+    // we first check if that Goal actually exists in the Goal table.
+    const goal = await Goal.findByPk(GoalID);
+    
+    if (!goal) {
+      // If the Foreign Key refers to a non-existent Goal
+      return res.status(404).json({ message: "Goal not found." });
+    }
+
     // Define the time range for the current day (local time)
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
