@@ -39,3 +39,17 @@ export const getActivities = async (GoalID) => {
     throw error.response?.data?.message || "Server Error";
   }
 };
+
+export const getActivitiesByDate = async (GoalID, date) => {
+  if (!GoalID) throw new Error("GoalID is required.");
+  if (!date) throw new Error("date is required. Use YYYY-MM-DD");
+
+  try {
+    const response = await API.get("/activities/day", {
+      params: { GoalID, date },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Server Error";
+  }
+};
