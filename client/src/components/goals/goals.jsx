@@ -15,7 +15,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { getGoal, saveGoal } from "../../services/goalsService";
+import { saveGoal } from "../../services/goalsService";
 import { generateActivities } from "../../services/aiService";
 import { saveActivities } from "../../services/activitiesService";
 
@@ -112,19 +112,17 @@ export default function Goals({ onGoalCreated }) {
       // make input forms and the button disabled
       setIsSaving(true);
 
-      await saveGoal(payload);
-
-      const goal = await getGoal();
+      const savedGoal = await saveGoal(payload);
 
       const aiResult = await generateActivities(
-        goal.Goal,
-        goal.AvailableDays,
-        goal.time_slots,
+        savedGoal.Goal,
+        savedGoal.AvailableDays,
+        savedGoal.time_slots,
       );
 
       for (const activity of aiResult) {
         await saveActivities(
-          goal.GoalID,
+          savedGoal.GoalID,
           activity.Title,
           activity.Description,
           activity.start,
