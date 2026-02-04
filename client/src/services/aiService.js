@@ -1,47 +1,50 @@
 import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = import.meta.env.VITE_API_API_KEY;
-
-//Changed mock data for testing purposes
-const mockData = [
-  {
-   Title: "Morning Workout",
-    Description: "A light cardio and stretching session to start the day energized.",
-    start: "2026-03-04T07:30:00Z",
-    end: "2026-03-04T08:15:00Z"
-  },
-  {
-    Title: "Team Sync Meeting",
-    Description: "Weekly stand-up with the development team to review tasks and blockers.",
-    start: "2026-03-05T09:00:00Z",
-    end: "2026-03-05T09:30:00Z"
-  },
-  {
-    Title: "Lunch With Client",
-    Description: "Discussing project goals and deliverables in a casual lunch setting.",
-    start: "2026-03-06T12:00:00Z",
-    end: "2026-03-06T13:00:00Z"
-  },
-  {
-   Title: "Evening Study Session",
-    Description: "Focused time for reading and practicing JavaScript concepts.",
-    start: "2026-03-06T18:30:00Z",
-    end: "2026-03-06T20:00:00Z"
-  }
-];
-
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export const generateActivities = async (Goal, Days, TimeSlot) => {
   try {
+    console.log(Goal);
+    console.log(Days);
+    console.log(Timeslot);
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      // TODO we need a very nice prompt
-      contents: 'Respond with exactly "Hello"',
+
+      config: {
+        responseMimeType: "application/json",
+      },
+
+      contents: `
+      Act as a professional fitness coach and scheduler.
+      Generate a workout plan based on these parameters:
+      - Goal: ${Goal}
+      - Days per week: ${Days}
+      - Available Timeslot per day: ${TimeSlot}
+
+      Return a JSON array of objects. Each object represents a single workout session.
+      Strictly follow this schema:
+      {
+        "Title": "Short exercise name",
+        "Description": "Max 15 words instruction",
+        "start": "ISO 8601 format string",
+        "end": "ISO 8601 format string"
+      }
+
+      Constraints:
+      1. Only return the JSON array. No conversational text.
+      2. Distribute the ${Days} sessions logically across a standard week starting from Monday.
+      3. Match the time range specified in "${TimeSlot}".
+      4. Ensure descriptions are concise for mobile calendar views.
+    `,
     });
 
     // TODO check text nesting
-    return mockData;
+    console.log("hello world");
+    const responseText = JSON.parse(response.text);
+
+    return responseText;
+
   } catch (error) {
     throw error.response?.data?.message || "Server Error";
   }
