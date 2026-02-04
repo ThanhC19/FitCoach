@@ -4,7 +4,8 @@ import { saveGoals, getGoalByUserId } from "./controllers/goalsController.js";
 import {
   getActivities,
   postActivity,
-  getTodaysActivities
+  getTodaysActivities,
+  getActivitiesByDate,
 } from "./controllers/activitiesController.js";
 
 const router = express.Router();
@@ -14,7 +15,8 @@ router.post("/login", login);
 router.post("/goals", saveGoals);
 router.get("/goals", getGoalByUserId);
 router.get("/activities", getActivities);
-router.post("/activities",postActivity);
-router.get("/today", getTodaysActivities)
+router.get("/activities/day", getActivitiesByDate);
+router.post("/activities", postActivity);
+router.get("/today", getTodaysActivities);
 
 export default router;
