@@ -39,7 +39,17 @@ export default function Sidebar({ onLogout }) {
         gap: 25,                   // Controls the gap between the nav group and logout
         boxShadow: 3,
       }}
-    >
+    > 
+     <Box
+       component="img"
+       src="/logo.png"
+       alt="Logo"
+       sx={{
+         width: "200px",     
+         height: "auto",
+         background: "inherit"
+       }}
+     />
      
       {/* Navigation Group */}
       <Box 
