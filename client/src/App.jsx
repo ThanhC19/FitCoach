@@ -5,22 +5,18 @@ import { getCustomTheme } from "./theme";
 import { Routes, Route, Navigate, Outlet } from "react-router";
 import { getGoal } from "./services/goalsService";
 import { getActivities } from "./services/activitiesService";
-import dayjs from "dayjs";
 // Components
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-import Calendar from "./components/calendar/calendar";
 import Sidebar from "./components/sidebar/sidebar";
 import Goals from "./components/goals/goals";
+import Home from "./components/home/home";
 
 function App() {
   const [mode, setMode] = useState("light");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [events, setEvents] = useState([]); // State to hold the user's activities
   const [refreshTrigger, setRefreshTrigger] = useState(0); // New trigger state
-  const [selectedDate, setSelectedDate] = useState(
-    dayjs().format("YYYY-MM-DD"),
-  );
 
   useEffect(() => {
     const loadCalendarData = async () => {
@@ -110,13 +106,7 @@ function App() {
           {/*pass the events state as a prop*/}
           <Route
             path="/home"
-            element={
-              <Calendar
-                events={events}
-                selectedDate={selectedDate}
-                onSelectDate={setSelectedDate}
-              />
-            }
+            element={<Home refreshTrigger={refreshTrigger} />}
           />
 
           {/*Pass setRefreshTrigger to the Goals component*/}
