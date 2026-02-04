@@ -15,7 +15,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { getGoal, saveGoal } from "../../services/goalsService";
+import { saveGoal } from "../../services/goalsService";
 import { generateActivities } from "../../services/aiService";
 import { saveActivities } from "../../services/activitiesService";
 
