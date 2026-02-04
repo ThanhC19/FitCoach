@@ -1,10 +1,11 @@
-import { useState, useMemo,useEffect} from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ThemeProvider, CssBaseline, IconButton } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { getCustomTheme } from "./theme";
 import { Routes, Route, Navigate, Outlet } from "react-router";
-import { getGoal } from "./services/goalsService"; 
-import { getActivities } from "./services/activitiesService"
+import { getGoal } from "./services/goalsService";
+import { getActivities } from "./services/activitiesService";
+import dayjs from "dayjs";
 // Components
 import Login from "./components/login/login";
 import Register from "./components/register/register";
@@ -17,35 +18,38 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [events, setEvents] = useState([]); // State to hold the user's activities
   const [refreshTrigger, setRefreshTrigger] = useState(0); // New trigger state
-  
- useEffect(() => {
-  const loadCalendarData = async () => {
-    // Only fetch if authenticated
-    if (!isAuthenticated) return;
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format("YYYY-MM-DD"),
+  );
 
-    try {
-      // 1. First, get the goal
-      const goal = await getGoal(); 
-      
-      //  Check your console to see if GoalID actually exists
-      console.log("Fetched Goal:", goal);
+  useEffect(() => {
+    const loadCalendarData = async () => {
+      // Only fetch if authenticated
+      if (!isAuthenticated) return;
 
-      if (goal && goal.GoalID) {
-        // 2. Use the ID from the goal we just fetched
-        const data = await getActivities(goal.GoalID);
-        
-        // Check if the database is returning an array
-        console.log("Fetched Activities:", data);
-        
-        setEvents(data); 
+      try {
+        // 1. First, get the goal
+        const goal = await getGoal();
+
+        //  Check your console to see if GoalID actually exists
+        console.log("Fetched Goal:", goal);
+
+        if (goal && goal.GoalID) {
+          // 2. Use the ID from the goal we just fetched
+          const data = await getActivities(goal.GoalID);
+
+          // Check if the database is returning an array
+          console.log("Fetched Activities:", data);
+
+          setEvents(data);
+        }
+      } catch (err) {
+        console.error("Failed to load activities:", err);
       }
-    } catch (err) {
-      console.error("Failed to load activities:", err);
-    }
-  };
+    };
 
-  loadCalendarData();
-}, [isAuthenticated, refreshTrigger]); // Only runs when login state changes and that's why  refresh trigger was introduced fetch new data upon clicking on the gemere schedule button
+    loadCalendarData();
+  }, [isAuthenticated, refreshTrigger]); // Only runs when login state changes and that's why  refresh trigger was introduced fetch new data upon clicking on the gemere schedule button
 
   const theme = useMemo(() => getCustomTheme(mode), [mode]);
 
@@ -90,22 +94,40 @@ function App() {
         <Route
           element={
             isAuthenticated ? (
-              <DashboardLayout onLogout={() => {
-                setIsAuthenticated(false)
-                setEvents([]); // This clears the calendar data so the next user doesn't see it 
-              }} />
+              <DashboardLayout
+                onLogout={() => {
+                  setIsAuthenticated(false);
+                  setEvents([]); // This clears the calendar data so the next user doesn't see it
+                }}
+              />
             ) : (
               <Navigate to="/login" replace />
             )
           }
         >
           {/*All protected routes goes here*/}
-          
+
           {/*pass the events state as a prop*/}
-          <Route path="/home" element={<Calendar events={events} />} />
-         
+          <Route
+            path="/home"
+            element={
+              <Calendar
+                events={events}
+                selectedDate={selectedDate}
+                onSelectDate={setSelectedDate}
+              />
+            }
+          />
+
           {/*Pass setRefreshTrigger to the Goals component*/}
-          <Route path="/goal-setting" element={<Goals onGoalCreated={() => setRefreshTrigger(prev => prev + 1)} />} />
+          <Route
+            path="/goal-setting"
+            element={
+              <Goals
+                onGoalCreated={() => setRefreshTrigger((prev) => prev + 1)}
+              />
+            }
+          />
         </Route>
 
         {/* Fallback Redirects */}
