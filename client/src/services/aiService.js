@@ -1,7 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = import.meta.env.VITE_API_API_KEY;
-
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export const generateActivities = async (Goal, Days, TimeSlot) => {
@@ -42,10 +41,9 @@ export const generateActivities = async (Goal, Days, TimeSlot) => {
 
     // TODO check text nesting
     console.log("hello world");
-    const raw = response.text;
-    const text = JSON.parse(raw);
+    const responseText = JSON.parse(response.text);
 
-    return text
+    return responseText;
 
   } catch (error) {
     throw error.response?.data?.message || "Server Error";
