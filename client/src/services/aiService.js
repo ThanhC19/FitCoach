@@ -7,7 +7,7 @@ export const generateActivities = async (Goal, Days, TimeSlot) => {
   try {
     console.log(Goal);
     console.log(Days);
-    console.log(Timeslot);
+    console.log(TimeSlot);
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
 
@@ -44,7 +44,6 @@ export const generateActivities = async (Goal, Days, TimeSlot) => {
     const responseText = JSON.parse(response.text);
 
     return responseText;
-
   } catch (error) {
     throw error.response?.data?.message || "Server Error";
   }
