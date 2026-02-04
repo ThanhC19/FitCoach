@@ -1,10 +1,26 @@
 import { Link, useLocation, useNavigate } from "react-router";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { logoutUser } from "../../services/authService";
 
 export default function Sidebar({ onLogout }) {
   const location = useLocation(); // uselocation() gives an object describing the current url in the app
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+        try {
+            // 1. Call the API to destroy the session on the server
+            await logoutUser(); 
+            
+            // 2. Clear any local state since we are passing a function from App.jsx)
+            if (onLogout) onLogout(); 
+
+            // 3. Redirect the user to the login page
+            navigate("/login"); //
+        } catch (error) {
+            console.error("Logout failed:", error.message);
+        }
+    };
 
   return (
     <Box
@@ -54,10 +70,7 @@ export default function Sidebar({ onLogout }) {
       </Button>
 
       <Button
-        onClick={() => {
-          onLogout(); //call the logout function, dunno if this will change after we implement auth
-          navigate("/login");
-        }}
+        onClick={handleLogout} // Updated to use the async handler
         sx={{
           mt: "auto",
           justifyContent: "flex-start",

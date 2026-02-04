@@ -90,7 +90,10 @@ function App() {
         <Route
           element={
             isAuthenticated ? (
-               <DashboardLayout onLogout={() => setIsAuthenticated(false)} />
+              <DashboardLayout onLogout={() => {
+                setIsAuthenticated(false)
+                setEvents([]); // This clears the calendar data so the next user doesn't see it 
+              }} />
             ) : (
               <Navigate to="/login" replace />
             )
