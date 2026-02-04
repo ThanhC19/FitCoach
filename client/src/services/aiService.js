@@ -7,7 +7,7 @@ export const generateActivities = async (Goal, Days, TimeSlot) => {
   try {
     console.log(Goal);
     console.log(Days);
-    console.log(Timeslot);
+    // console.log(Timeslot);
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
 
