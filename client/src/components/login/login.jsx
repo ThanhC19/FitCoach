@@ -82,6 +82,7 @@ const Login = ({ onLogin }) => {
           <TextField
             name="username"
             label="Username"
+            autoComplete="username"
             variant="outlined"
             type="text"
             value={input.username}
@@ -99,6 +100,7 @@ const Login = ({ onLogin }) => {
           <TextField
             name="password"
             label="Password"
+            autoComplete="current-password"
             variant="outlined"
             value={input.password}
             onChange={handleChange}

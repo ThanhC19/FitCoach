@@ -87,6 +87,7 @@ const Register = (props) => {
             fullWidth
             label="Username"
             name="username"
+            autoComplete="username"
             variant="outlined"
             type="text"
             value={input.username}
@@ -105,6 +106,7 @@ const Register = (props) => {
             fullWidth
             label="Password"
             name="password"
+            autoComplete="new-password"
             variant="outlined"
             value={input.password}
             onChange={handleChange}

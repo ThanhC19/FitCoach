@@ -17,10 +17,11 @@ export const getGoalByUserId = async (req, res) => {
 
     const goal = await Goal.findOne({
       where: { UID: uid },
+      order: [["createdAt", "DESC"]],
     });
 
     if (!goal) {
-      return res.status(404).json({ message: "Goal not found for this user" });
+      return res.status(200).json(null);
     }
 
     res.status(200).json(goal);
