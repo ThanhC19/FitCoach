@@ -27,7 +27,7 @@ const toMinutes = (hhmm) => {
 
 const DAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
-export default function Goals() {
+export default function Goals({ onGoalCreated }) {
   // workout goal
   const [goal, setGoal] = useState("");
 
@@ -131,7 +131,7 @@ export default function Goals() {
           activity.end,
         );
       }
-
+      if (onGoalCreated) onGoalCreated(); // This tells App.jsx to fetch new data!
       navigate("/home");
     } catch (e) {
       setError(String(e));
