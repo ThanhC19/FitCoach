@@ -2,6 +2,34 @@ import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = import.meta.env.VITE_API_API_KEY;
 
+//Changed mock data for current dates
+const mockData = [
+  {
+   Title: "Morning Workout",
+    Description: "A light cardio and stretching session to start the day energized.",
+    start: "2026-02-04T07:30:00Z",
+    end: "2026-02-04T08:15:00Z"
+  },
+  {
+    Title: "Team Sync Meeting",
+    Description: "Weekly stand-up with the development team to review tasks and blockers.",
+    start: "2026-02-05T09:00:00Z",
+    end: "2026-02-05T09:30:00Z"
+  },
+  {
+    Title: "Lunch With Client",
+    Description: "Discussing project goals and deliverables in a casual lunch setting.",
+    start: "2026-02-06T12:00:00Z",
+    end: "2026-02-06T13:00:00Z"
+  },
+  {
+   Title: "Evening Study Session",
+    Description: "Focused time for reading and practicing JavaScript concepts.",
+    start: "2026-02-06T18:30:00Z",
+    end: "2026-02-06T20:00:00Z"
+  }
+];
+
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export const generateActivities = async (Goal, Days, TimeSlot) => {
@@ -13,7 +41,7 @@ export const generateActivities = async (Goal, Days, TimeSlot) => {
     });
 
     // TODO check text nesting
-    return response.text;
+    return mockData;
   } catch (error) {
     throw error.response?.data?.message || "Server Error";
   }
