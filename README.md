@@ -149,6 +149,7 @@ npm run dev
 ## Roadmap / Remaining Tasks
 
 - [ ] **Edit scheduled events:** Update or reschedule existing workout activities from the calendar.
+- [ ] **Multiple time slots per week:** Support multiple availability windows (e.g., Mon 1–3 PM, Wed 6–8 PM).
 - [ ] **Log activity + progress tracking:** Mark workouts as done and track progress over time (e.g., charts / stats).
 - [ ] **AI feedback:** Get personalized feedback based on your activity logs and consistency.
 - [ ] **“Angry coach” mode:** If you skip a workout, the AI coach reacts accordingly 😡 (motivational reminders / roast-style feedback).
