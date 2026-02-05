@@ -52,22 +52,29 @@ const Login = ({ onLogin }) => {
       {/* Main Card Container*/}
       <div className="w-full max-w-[720px] p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/60 dark:shadow-none transition-all duration-500">
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          
           <div className="text-center mb-2">
             {" "}
-            {/* Normalized margin-bottom */}
+            {/* Logo Container */}
+            <div className="flex justify-center w-full mb-2">
+              <img
+                src="/logo.png"
+                alt="FitCoach Logo"
+                style={{
+                  height: "150px", 
+                  width: "250px",
+                  display: "block"
+                }}
+              />
+            </div>
+
             <Typography
               variant="h4"
-              className="font-black tracking-tighter dark:text-white"
-              sx={{ fontSize: "2.5rem" }}
-            >
-              FitCoach
-            </Typography>
-            <Typography
-              variant="text-center mb-2"
               className="text-slate-500 dark:text-slate-400 font-medium mt-1"
             >
               Welcome back! Ready for a workout?
             </Typography>
+            
             {error && (
               <Typography
                 variant="body2"
