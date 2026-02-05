@@ -139,11 +139,16 @@ export default function Goals({ onGoalCreated }) {
   };
 
   return (
-    <Box sx={{ minWidth: 150 }}>
+    <Box
+      sx={{
+        minWidth: 150,
+        px: { xs: 2, sm: 4 },
+      }}
+    >
       {/* spacing for MUI parts */}
       <Stack spacing={7}>
         {/* Goals */}
-        <FormControl fullWidth>
+        <FormControl fullWidth sx={{ maxWidth: 500 }}>
           <InputLabel id="workout-goal-label">Workout goal</InputLabel>
           <Select
             labelId="workout-goal-label"
@@ -162,7 +167,12 @@ export default function Goals({ onGoalCreated }) {
 
         {/* Allows days */}
         <FormControl fullWidth sx={{ mt: 2 }}>
-          <InputLabel shrink id="allowed-days-label" htmlFor="allowed-days">
+          <InputLabel
+            shrink
+            id="allowed-days-label"
+            htmlFor="allowed-days"
+            sx={{ mt: -1 }}
+          >
             Allowed days
           </InputLabel>
 
@@ -223,6 +233,7 @@ export default function Goals({ onGoalCreated }) {
         </Box>
 
         {/* Generate Schedule Button  */}
+
         <Button
           onClick={handleSubmit}
           disabled={isSaving}
@@ -230,7 +241,7 @@ export default function Goals({ onGoalCreated }) {
           startIcon={<AutoAwesomeIcon sx={{ fontSize: 18 }} />}
           sx={{
             mt: "auto",
-            alignSelf: "center",
+            alignSelf: "flex-start",
             px: 2.5,
             py: 1,
             borderRadius: "999px",
@@ -246,6 +257,7 @@ export default function Goals({ onGoalCreated }) {
         >
           {isSaving ? "Saving..." : "Get schedule from coach"}
         </Button>
+
         {/* Display API error */}
         {error && (
           <Alert sx={{ mt: 2 }} severity="error">
