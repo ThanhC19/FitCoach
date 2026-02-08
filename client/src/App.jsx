@@ -2,15 +2,16 @@ import { useState, useMemo, useEffect } from "react";
 import { ThemeProvider, CssBaseline, IconButton } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { getCustomTheme } from "./theme";
-import { Routes, Route, Navigate, Outlet } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { getGoal } from "./services/goalsService";
 import { getActivities } from "./services/activitiesService";
 // Components
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-import Sidebar from "./components/sidebar/sidebar";
 import Goals from "./components/goals/goals";
 import Home from "./components/home/home";
+import DashboardLayout from "./layouts/dashboardLayout";
+import AuthLayout from "./layouts/authLayout";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -27,15 +28,9 @@ function App() {
         // 1. First, get the goal
         const goal = await getGoal();
 
-        //  Check your console to see if GoalID actually exists
-        console.log("Fetched Goal:", goal);
-
         if (goal && goal.GoalID) {
           // 2. Use the ID from the goal we just fetched
           const data = await getActivities(goal.GoalID);
-
-          // Check if the database is returning an array
-          console.log("Fetched Activities:", data);
 
           setEvents(data);
         }
@@ -45,7 +40,7 @@ function App() {
     };
 
     loadCalendarData();
-  }, [isAuthenticated, refreshTrigger]); // Only runs when login state changes and that's why  refresh trigger was introduced fetch new data upon clicking on the gemere schedule button
+  }, [isAuthenticated, refreshTrigger]);
 
   const theme = useMemo(() => getCustomTheme(mode), [mode]);
 
@@ -101,15 +96,14 @@ function App() {
             )
           }
         >
-          {/*All protected routes goes here*/}
+          {/*protected routes*/}
 
-          {/*pass the events state as a prop*/}
           <Route
             path="/home"
             element={<Home refreshTrigger={refreshTrigger} />}
           />
 
-          {/*Pass setRefreshTrigger to the Goals component*/}
+          
           <Route
             path="/goal-setting"
             element={
@@ -135,35 +129,6 @@ function App() {
         />
       </Routes>
     </ThemeProvider>
-  );
-}
-
-// {onLogout} between the () add this to line 60 when navbar is imported
-// Helper function for the Dashboard Layout
-function DashboardLayout({ onLogout }) {
-  return (
-    <div className="w-full min-h-screen flex bg-slate-50 dark:bg-slate-900 transition-colors duration-500">
-      {/* Sidebar on the left */}
-      <Sidebar onLogout={onLogout} />
-
-      {/* Main content on the right */}
-      <main className="flex-1 flex flex-col items-center justify-center pt-24 pb-12 px-4">
-        <div className="w-full max-w-4xl">
-          <Outlet />
-        </div>
-      </main>
-    </div>
-  );
-}
-
-// Helper function for the AUTH Layout for register and login otherwise it will be on top left corner
-function AuthLayout() {
-  return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 transition-colors duration-500">
-      <div className="w-full flex justify-center items-center">
-        <Outlet />
-      </div>
-    </div>
   );
 }
 

@@ -96,12 +96,12 @@ const Login = ({ onLogin }) => {
             onChange={handleChange}
             required
             sx={{
-              width: "97%", // Change width to 97%
-              mx: "auto", // Centers the field within the parent div
+              width: "97%", 
+              mx: "auto", 
               "& .MuiOutlinedInput-root": { borderRadius: "16px" },
-              mb: 2, // Margin Bottom
-              mt: 2, // Margin Top
-            }} //CREATE THE MARGINS BETWEEN THE BOXES AND THE TEXTS
+              mb: 2, 
+              mt: 2, 
+            }}
           />
 
           <TextField
@@ -140,8 +140,8 @@ const Login = ({ onLogin }) => {
             sx={{
               mt: 2,
               mb: 2,
-              display: "flex", // Ensures margin auto works
-              mx: "auto", // Centers the button
+              display: "flex", 
+              mx: "auto", 
               width: "97%",
               height: "56px",
               borderRadius: "16px",
@@ -151,7 +151,7 @@ const Login = ({ onLogin }) => {
             Sign In
           </Button>
 
-          {/* BIGGER OR DIVIDER */}
+          
           <div className="flex items-center my-2 gap-4  mx-auto">
             <div className="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
             <Typography
@@ -169,9 +169,9 @@ const Login = ({ onLogin }) => {
             className="py-3 font-bold border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
             sx={{
               mt: 1,
-              mb: 2, // Added some bottom margin for breathing room
-              display: "flex", // Ensures margin auto works
-              mx: "auto", // Centers the button
+              mb: 2, 
+              display: "flex", 
+              mx: "auto", 
               width: "97%",
               height: "56px",
               borderRadius: "16px",
