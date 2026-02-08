@@ -7,8 +7,7 @@ const goalModel = (sequelize, DataTypes) => {
         GoalID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         UID: { type: DataTypes.INTEGER, allowNull: false },
         Goal: { type: DataTypes.ENUM(...GOAL_TYPES), allowNull: false },
-        AvailableDays: { type: DataTypes.ARRAY(DataTypes.ENUM(...DAYS)), allowNull: false, defaultValue: [] }, //Array of Enums
-        // example [{start:"9:00", end:"10:00"},{start:"9:00", end:"15:00"}] AI code
+        AvailableDays: { type: DataTypes.ARRAY(DataTypes.ENUM(...DAYS)), allowNull: false, defaultValue: [] },
         time_slots: { type: DataTypes.JSONB, allowNull: false, defaultValue: [] }
     },
         { tableName: "Goals", timestamps: true }

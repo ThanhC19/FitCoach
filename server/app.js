@@ -10,13 +10,13 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(session({
-  secret:process.env.SESSION_SECRET || 'a_back_up_test_secret' ,
-  resave:false, //prevent save session if it wasn't modified
-  saveUninitialized:false,
-  cookie:{
-    httpOnly:true, //prevents client side script
-    secure:false,
-    maxAge:1000*60*60*24*30 //1month
+  secret: process.env.SESSION_SECRET || 'a_back_up_test_secret',
+  resave: false, // prevent save session if it wasn't modified
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true, // prevents client side script
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 24 * 30 // 1month
   }
 }))
 
