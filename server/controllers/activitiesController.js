@@ -21,7 +21,7 @@ export const getActivities = async (req, res) => {
     // Now we find all activities matching that Foreign Key
     const activities = await Activities.findAll({
       where: { GoalID: GoalID }, // Searching by Foreign Key
-      order: [["start", "ASC"]],
+      order: [["start", "ASC"]], // get the most recent goal
     });
 
     return res.status(200).json(activities);
@@ -57,11 +57,6 @@ export const getActivitiesByDate = async (req, res) => {
 
     // Now we find all activities matching that Foreign Key and Date
 
-    // Equivalent SQL (filter by GoalID and by the date portion of `start`):
-    // SELECT * FROM "Activities"
-    // WHERE "GoalID" = 18
-    //   AND DATE("start") = '2026-02-04'
-    // ORDER BY "start" ASC;
     const activities = await Activities.findAll({
       where: {
         GoalID: GoalID,

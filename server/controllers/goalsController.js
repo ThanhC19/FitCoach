@@ -1,17 +1,9 @@
 import { Goal } from "../db.js";
 
-// export const getAllGoals = async (req, res) => {
-//   try {
-//     const goals = await Goal.findAll();
-//     res.status(200).json(goals);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server Error", error: error.message });
-//   }
-// };
-
 export const getGoalByUserId = async (req, res) => {
   try {
     const uid = req.session?.uid;
+
     // check if user is authorized
     if (!uid) return res.status(401).json({ message: "Unauthorized" });
 
@@ -33,6 +25,7 @@ export const getGoalByUserId = async (req, res) => {
 export const saveGoals = async (req, res) => {
   try {
     const uid = req.session?.uid;
+
     // check if user is authorized
     if (!uid) return res.status(401).json({ message: "Unauthorized" });
 

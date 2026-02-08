@@ -7,7 +7,7 @@ export const sequelize = new Sequelize(
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD,
   {
-    //Create a .env and add your postgres credientials
+    // Create a .env and add your postgres credientials
     host: "localhost",
     dialect: "postgres",
     logging: false,
@@ -27,7 +27,7 @@ export const User = models.User;
 export const Goal = models.Goal;
 export const Activities = models.Activities;
 
-//export connect DB function:
+// export connect DB function:
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
