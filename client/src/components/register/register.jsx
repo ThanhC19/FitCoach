@@ -101,12 +101,12 @@ const Register = (props) => {
             onChange={handleChange}
             required
             sx={{
-              width: "97%", // Change width to 97%
-              mx: "auto", // Centers the field within the parent div
+              width: "97%", 
+              mx: "auto", 
               "& .MuiOutlinedInput-root": { borderRadius: "16px" },
-              mb: 2, // Margin Bottom
-              mt: 2, // Margin Top
-            }} //CREATE THE MARGINS BETWEEN THE BOXES AND THE TEXTS
+              mb: 2, 
+              mt: 2, 
+            }} 
           />
 
           <TextField
@@ -145,10 +145,10 @@ const Register = (props) => {
             variant="contained"
             className="py-4 font-bold bg-blue-600 hover:bg-blue-700 normal-case text-lg rounded-2xl shadow-lg shadow-blue-200 dark:shadow-none"
             sx={{
-              mt: 2, // To add more gap between input field and the button
+              mt: 2, 
               mb: 2,
-              display: "flex", // Ensures margin auto works
-              mx: "auto", // Centers the button
+              display: "flex", 
+              mx: "auto", 
               width: "97%",
               height: "56px",
               borderRadius: "16px",
@@ -158,7 +158,7 @@ const Register = (props) => {
             Create Account
           </Button>
 
-          {/* BIGGER OR DIVIDER */}
+          
           <div className="flex items-center my-4 gap-4 justify-center">
             <Typography
               variant="body2"
@@ -176,8 +176,8 @@ const Register = (props) => {
             sx={{
               mt: 1,
               mb: 2,
-              display: "flex", // Ensures margin auto works
-              mx: "auto", // Centers the button
+              display: "flex", 
+              mx: "auto",
               width: "97%",
               height: "56px",
               borderRadius: "16px",
